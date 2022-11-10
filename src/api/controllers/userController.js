@@ -15,11 +15,11 @@ exports.userRegister = (req, res) => {
             res.json({ message: `Utilisateur crée : ${user.email}` });
         }
     })
-
-
 }
 
 exports.loginRegister = (req, res) => {
+    
+    console.log(req.body);
     // Find user
     User.findOne({ email: req.body.email }, (error, user) => {
         // If user not found
@@ -42,9 +42,9 @@ exports.loginRegister = (req, res) => {
                         res.status(500);
                         console.log(error);
                         res.json({message: "Impossible de générer le token"});
-
                     }
                     else {
+                        console.log(`Generated token: ${token}`);
                         res.status(200);
                         res.json({token});
                     }
