@@ -1,8 +1,3 @@
-<script setup>
-import Login from "./components/Login.vue";
-import Register from "./components/Register.vue";
-</script>
-
 <template>
   <header>
     <img
@@ -12,26 +7,26 @@ import Register from "./components/Register.vue";
       width="125"
       height="125"
     />
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <nav>
+      <RouterLink to="/posts">Posts</RouterLink>
+      <RouterLink to="/CreatePost">Create a Post</RouterLink>
+      <a @click="disconnect">Sign Off</a>
+    </nav>
   </header>
-  <div class="container" style="margin-top: 1rem; text-align: center">
-    <div class="row ">
-      <div class="col-sm">
-        <Login/>
-      </div>
-      <div class="col-sm">
-        <Register/>
-      </div>
-    </div>
-  </div>
+  
+  <router-view/>
 </template>
 
 <script>
-  import axios from "axios";
-  axios.get("localhost:3000/posts/");
+    export default {
+        methods: {
+            disconnect () {
+              localStorage.removeItem('blogjwttoken');
+              this.$router.push('/');
+              return ;
+            }
+        }
+    }
 </script>
 
 <style scoped>
@@ -52,26 +47,23 @@ nav {
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
+nav a.router-link-exact-active, nav a {
   color: var(--color-text);
 }
 
-nav a.router-link-exact-active:hover {
+nav a.router-link-exact-active:hover, nav a {
   background-color: transparent;
 }
 
-nav a {
+a {
   display: inline-block;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
+  text-decoration: underline;
+  
 }
 
 nav a:first-of-type {
   border: 0;
 }
-
-.content {
-  padding: 2rem;
-  display: flex;
-  flex-wrap: nowrap;}
 </style>
